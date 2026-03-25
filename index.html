@@ -1,113 +1,543 @@
-import React, { useState, useRef, useEffect } from "react";
-
-export default function BirthdayInviteWebsite() {
-  const [open, setOpen] = useState(false);
-  const videoRef = useRef(null);
-
-  useEffect(() => {
-    if (open && videoRef.current) {
-      videoRef.current.play().catch(() => {});
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Birthday Invitation</title>
+  <style>
+    :ro([greenvelope.com](https://www.greenvelope.com/?PPC_device=c&PPC_network=g&PPC_targetid=kwd-1176477991&gad_campaignid=10906958296&gad_source=1&gbraid=0AAAAAD50h6dtuRLVLm8glKPOafRtY1mwD&gclid=Cj0KCQjwj47OBhCmARIsAF5wUEHXuPCtOCqyAZva0mo_ZwjEAp-6hcixbvTvCyfhvoAQrYzNeJrSfO4aApdqEALw_wcB&utm_campaign=All+Invites+-+CAN+-+NEW&utm_medium=CPC&utm_source=Google&utm_term=invitation+website+e)) #070707;
+      --bg-soft: #0e0e0f;
+      --card: rgba(18, 18, 20, 0.82);
+      --gold: #d6b46e;
+      --gold-soft: #b89246;
+      --line: rgba(214, 180, 110, 0.22);
+      --text: #f6f1e7;
+      --muted: #c4b89e;
+      --shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
     }
-  }, [open]);
 
-  return (
-    <div className="min-h-screen bg-black text-white relative overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,0,0,0.18),transparent_30%),radial-gradient(circle_at_bottom,rgba(120,0,0,0.22),transparent_35%)]" />
-      <div className="absolute inset-0 opacity-30 bg-[linear-gradient(to_right,rgba(255,0,0,0.08)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,0,0,0.08)_1px,transparent_1px)] bg-[size:48px_48px]" />
-      <div className="absolute inset-0 bg-gradient-to-b from-black via-[#090000] to-black" />
+    * { box-sizing: border-box; }
 
-      <div className="relative z-10 min-h-screen flex flex-col items-center justify-center px-6">
-        <div className="mb-10 text-center">
-          <div className="h-px w-32 mx-auto bg-gradient-to-r from-transparent via-red-600 to-transparent mb-6" />
-          <p className="text-red-400/90 uppercase tracking-[0.45em] text-xs sm:text-sm">
-            Open the invitation
-          </p>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background:
+        radial-gradient(circle at top, rgba(214, 180, 110, 0.12), transparent 28%),
+        radial-gradient(circle at bottom, rgba(214, 180, 110, 0.08), transparent 32%),
+        linear-gradient(180deg, #070707 0%, #0a0a0b 100%);
+      color: var(--text);
+      font-family: Georgia, "Times New Roman", serif;
+      min-height: 100%;
+    }
+
+    body {
+      overflow-x: hidden;
+    }
+
+    .texture {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+      background-size: 40px 40px;
+      opacity: 0.25;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 48px 20px;
+      position: relative;
+    }
+
+    .hero {
+      width: min(1150px, 100%);
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 42px;
+      align-items: center;
+    }
+
+    .left {
+      padding: 12px 0;
+    }
+
+    .eyebrow {
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 0.38em;
+      font-size: 12px;
+      margin-bottom: 22px;
+      opacity: 0.95;
+    }
+
+    h1 {
+      font-size: clamp(2.6rem, 6vw, 5.5rem);
+      line-height: 0.95;
+      margin: 0 0 20px;
+      font-weight: 500;
+      letter-spacing: -0.03em;
+    }
+
+    .sub {
+      max-width: 520px;
+      color: var(--muted);
+      font-size: 1.08rem;
+      line-height: 1.75;
+      margin-bottom: 30px;
+    }
+
+    .detail-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 34px;
+    }
+
+    .pill {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.02);
+      color: #eadfcb;
+      padding: 12px 16px;
+      border-radius: 999px;
+      font-size: 0.92rem;
+      backdrop-filter: blur(8px);
+    }
+
+    .cta-row {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .gold-btn,
+    .ghost-btn {
+      border-radius: 999px;
+      padding: 15px 24px;
+      font-size: 0.98rem;
+      cursor: pointer;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+    }
+
+    .gold-btn {
+      border: none;
+      color: #15120d;
+      background: linear-gradient(135deg, #f0d39a, #c89a48);
+      box-shadow: 0 18px 34px rgba(200, 154, 72, 0.18);
+    }
+
+    .gold-btn:hover,
+    .ghost-btn:hover,
+    .envelope-wrap:hover {
+      transform: translateY(-2px);
+    }
+
+    .ghost-btn {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--line);
+    }
+
+    .right {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .envelope-wrap {
+      position: relative;
+      width: min(520px, 100%);
+      transition: transform 0.3s ease;
+    }
+
+    .glow {
+      position: absolute;
+      inset: auto 12% -14% 12%;
+      height: 120px;
+      background: radial-gradient(circle, rgba(214,180,110,0.35), transparent 65%);
+      filter: blur(24px);
+      z-index: 0;
+    }
+
+    .envelope-card {
+      position: relative;
+      background: linear-gradient(180deg, rgba(20,20,22,0.94), rgba(10,10,11,0.94));
+      border: 1px solid rgba(214, 180, 110, 0.18);
+      border-radius: 28px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .envelope-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(214,180,110,0.08), transparent 45%, rgba(255,255,255,0.02));
+      pointer-events: none;
+    }
+
+    .envelope-frame {
+      position: relative;
+      aspect-ratio: 4 / 3;
+      width: 100%;
+      display: grid;
+      place-items: center;
+    }
+
+    .envelope {
+      position: relative;
+      width: 100%;
+      max-width: 420px;
+      aspect-ratio: 1.3 / 1;
+      cursor: pointer;
+      filter: drop-shadow(0 20px 45px rgba(0,0,0,0.5));
+    }
+
+    .letter {
+      position: absolute;
+      left: 50%;
+      bottom: 20%;
+      transform: translateX(-50%);
+      width: 74%;
+      height: 68%;
+      background:
+        linear-gradient(180deg, #f6efdf 0%, #efe4cc 100%);
+      border-radius: 12px 12px 6px 6px;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.16);
+      transition: transform 0.7s ease;
+    }
+
+    .letter::before,
+    .letter::after {
+      content: "";
+      position: absolute;
+      left: 12%;
+      right: 12%;
+      height: 1px;
+      background: rgba(140, 115, 75, 0.2);
+    }
+
+    .letter::before { top: 32%; }
+    .letter::after { top: 54%; }
+
+    .env-back {
+      position: absolute;
+      inset: 0;
+      border-radius: 18px;
+      background: linear-gradient(180deg, #1c1510, #100d0a);
+      border: 1px solid rgba(214, 180, 110, 0.2);
+    }
+
+    .env-front {
+      position: absolute;
+      inset: auto 0 0 0;
+      height: 63%;
+      background: linear-gradient(180deg, #1a140f, #0f0c09);
+      clip-path: polygon(0 100%, 0 0, 50% 56%, 100% 0, 100% 100%);
+      border-bottom-left-radius: 18px;
+      border-bottom-right-radius: 18px;
+      border: 1px solid rgba(214, 180, 110, 0.18);
+      border-top: none;
+      z-index: 4;
+    }
+
+    .env-flap {
+      position: absolute;
+      inset: 0;
+      transform-origin: top center;
+      transition: transform 0.9s ease;
+      z-index: 5;
+      pointer-events: none;
+    }
+
+    .env-flap::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      height: 66%;
+      background: linear-gradient(180deg, #2a2017, #17110c);
+      clip-path: polygon(0 0, 100% 0, 50% 82%);
+      border-top-left-radius: 18px;
+      border-top-right-radius: 18px;
+      border: 1px solid rgba(214, 180, 110, 0.2);
+    }
+
+    .seal {
+      position: absolute;
+      left: 50%;
+      top: 54%;
+      transform: translate(-50%, -50%);
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #f5d899, #ba8a3e 65%, #9c7130 100%);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.28);
+      z-index: 6;
+      display: grid;
+      place-items: center;
+      color: #2f2416;
+      font-size: 1.15rem;
+      letter-spacing: 0.08em;
+    }
+
+    .envelope.open .env-flap {
+      transform: rotateX(180deg);
+    }
+
+    .envelope.open .letter {
+      transform: translateX(-50%) translateY(-72px);
+    }
+
+    .hint {
+      margin-top: 20px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.95rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .note {
+      margin-top: 16px;
+      text-align: center;
+      color: rgba(246, 241, 231, 0.72);
+      font-size: 0.92rem;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: rgba(3, 3, 4, 0.84);
+      backdrop-filter: blur(14px);
+      z-index: 100;
+    }
+
+    .modal.show {
+      display: flex;
+    }
+
+    .video-shell {
+      position: relative;
+      width: min(980px, 100%);
+      border-radius: 30px;
+      background: linear-gradient(180deg, rgba(20,20,22,0.96), rgba(8,8,9,0.96));
+      border: 1px solid rgba(214,180,110,0.2);
+      box-shadow: var(--shadow);
+      padding: 18px;
+    }
+
+    .video-shell::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 30px;
+      pointer-events: none;
+      background: linear-gradient(135deg, rgba(214,180,110,0.12), transparent 42%);
+    }
+
+    .close-btn {
+      position: absolute;
+      right: 16px;
+      top: 16px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid rgba(214,180,110,0.28);
+      background: rgba(255,255,255,0.04);
+      color: var(--text);
+      font-size: 1.4rem;
+      cursor: pointer;
+      z-index: 2;
+    }
+
+    .video-frame {
+      aspect-ratio: 16 / 9;
+      width: 100%;
+      overflow: hidden;
+      border-radius: 22px;
+      border: 1px solid rgba(214,180,110,0.15);
+      background: black;
+    }
+
+    video {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      background: black;
+    }
+
+    .footer-note {
+      position: absolute;
+      bottom: 22px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: rgba(246, 241, 231, 0.45);
+      font-size: 0.8rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-align: center;
+    }
+
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: 1fr;
+        gap: 34px;
+      }
+
+      .left {
+        text-align: center;
+      }
+
+      .sub {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .detail-row,
+      .cta-row {
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .page {
+        padding: 28px 16px 70px;
+      }
+
+      .envelope-card {
+        padding: 18px;
+        border-radius: 22px;
+      }
+
+      .seal {
+        width: 56px;
+        height: 56px;
+        font-size: 0.95rem;
+      }
+
+      .footer-note {
+        font-size: 0.72rem;
+        width: calc(100% - 32px);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="texture"></div>
+
+  <main class="page">
+    <section class="hero">
+      <div class="left">
+        <div class="eyebrow">A Special Invitation</div>
+        <h1>You're invited to my birthday.</h1>
+        <p class="sub">
+          A private digital invitation with a personal video message waiting inside.
+          Open the envelope to reveal it.
+        </p>
+
+        <div class="detail-row">
+          <div class="pill">Dress Code: Your best energy</div>
+          <div class="pill">Private Invite Link</div>
+          <div class="pill">Open the envelope below</div>
         </div>
 
-        <button
-          onClick={() => setOpen(true)}
-          aria-label="Open invitation"
-          className="group relative focus:outline-none"
-        >
-          <div className="absolute -inset-10 rounded-full bg-red-700/20 blur-3xl group-hover:bg-red-600/30 transition duration-500" />
-
-          <div className="relative w-[300px] sm:w-[420px] md:w-[500px] transition duration-500 group-hover:scale-105 group-active:scale-95 drop-shadow-[0_0_40px_rgba(255,0,0,0.35)]">
-            <svg
-              viewBox="0 0 500 360"
-              className="w-full h-auto"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <defs>
-                <linearGradient id="bodyGrad" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0%" stopColor="#160000" />
-                  <stop offset="55%" stopColor="#2a0000" />
-                  <stop offset="100%" stopColor="#080808" />
-                </linearGradient>
-                <linearGradient id="flapGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#7f0000" />
-                  <stop offset="100%" stopColor="#330000" />
-                </linearGradient>
-                <linearGradient id="frontGrad" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0%" stopColor="#220000" />
-                  <stop offset="100%" stopColor="#3a0000" />
-                </linearGradient>
-                <filter id="glow">
-                  <feGaussianBlur stdDeviation="8" result="blur" />
-                  <feMerge>
-                    <feMergeNode in="blur" />
-                    <feMergeNode in="SourceGraphic" />
-                  </feMerge>
-                </filter>
-              </defs>
-
-              <rect x="35" y="55" width="430" height="255" rx="24" fill="url(#bodyGrad)" stroke="#991b1b" strokeWidth="3" />
-              <path d="M35 95 L250 225 L465 95" fill="none" stroke="#dc2626" strokeOpacity="0.35" strokeWidth="3" />
-              <path d="M35 310 L180 185 L250 225 L320 185 L465 310" fill="url(#frontGrad)" stroke="#7f1d1d" strokeWidth="3" />
-              <path d="M35 56 L250 205 L465 56" fill="url(#flapGrad)" stroke="#991b1b" strokeWidth="3" />
-              <circle cx="250" cy="192" r="34" fill="#090909" stroke="#ef4444" strokeWidth="3" filter="url(#glow)" />
-              <path d="M235 192 L250 206 L265 192" fill="none" stroke="#ef4444" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
-              <rect x="35" y="55" width="430" height="255" rx="24" fill="none" stroke="#ef4444" strokeOpacity="0.18" strokeWidth="8" />
-            </svg>
-          </div>
-        </button>
-
-        <p className="mt-8 text-red-300/75 text-sm tracking-[0.25em] uppercase">
-          Click the letter
-        </p>
+        <div class="cta-row">
+          <button class="gold-btn" id="openBtn">Open Invitation</button>
+          <button class="ghost-btn" id="scrollBtn">View Envelope</button>
+        </div>
       </div>
 
-      {open && (
-        <div className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center px-4 py-8">
-          <div className="absolute inset-0 bg-[radial-gradient(circle,rgba(255,0,0,0.12),transparent_45%)]" />
-
-          <button
-            onClick={() => {
-              if (videoRef.current) {
-                videoRef.current.pause();
-              }
-              setOpen(false);
-            }}
-            className="absolute top-5 right-5 z-50 w-11 h-11 rounded-full border border-red-700 bg-black/80 text-red-400 text-2xl leading-none hover:bg-red-950 hover:text-white transition"
-            aria-label="Close video"
-          >
-            ×
-          </button>
-
-          <div className="relative z-10 w-full max-w-4xl rounded-[28px] border border-red-800/80 bg-gradient-to-br from-[#120000] via-black to-[#120000] p-3 shadow-[0_0_60px_rgba(255,0,0,0.25)]">
-            <div className="aspect-video overflow-hidden rounded-[22px] border border-red-900/80 bg-black">
-              <video
-                ref={videoRef}
-                controls
-                playsInline
-                className="w-full h-full object-cover bg-black"
-              >
-                <source src="/birthday-video.mp4" type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
+      <div class="right" id="envelopeSection">
+        <div class="envelope-wrap">
+          <div class="glow"></div>
+          <div class="envelope-card">
+            <div class="envelope-frame">
+              <div class="envelope" id="envelope">
+                <div class="env-back"></div>
+                <div class="letter"></div>
+                <div class="env-front"></div>
+                <div class="env-flap"></div>
+                <div class="seal">✦</div>
+              </div>
             </div>
+            <div class="hint">Click the envelope</div>
+            <div class="note">Replace the video file later with your own birthday video.</div>
           </div>
         </div>
-      )}
+      </div>
+    </section>
+
+    <div class="footer-note">Elegant digital invitation experience</div>
+  </main>
+
+  <div class="modal" id="videoModal" aria-hidden="true">
+    <div class="video-shell">
+      <button class="close-btn" id="closeBtn" aria-label="Close">×</button>
+      <div class="video-frame">
+        <video id="inviteVideo" controls playsinline>
+          <source src="birthday-video.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
     </div>
-  );
-}
+  </div>
+
+  <script>
+    const envelope = document.getElementById('envelope');
+    const openBtn = document.getElementById('openBtn');
+    const scrollBtn = document.getElementById('scrollBtn');
+    const modal = document.getElementById('videoModal');
+    const closeBtn = document.getElementById('closeBtn');
+    const video = document.getElementById('inviteVideo');
+    const envelopeSection = document.getElementById('envelopeSection');
+
+    function openInvitation() {
+      envelope.classList.add('open');
+      setTimeout(() => {
+        modal.classList.add('show');
+        modal.setAttribute('aria-hidden', 'false');
+        video.play().catch(() => {});
+      }, 850);
+    }
+
+    function closeInvitation() {
+      modal.classList.remove('show');
+      modal.setAttribute('aria-hidden', 'true');
+      video.pause();
+      video.currentTime = 0;
+    }
+
+    envelope.addEventListener('click', openInvitation);
+    openBtn.addEventListener('click', openInvitation);
+
+    scrollBtn.addEventListener('click', () => {
+      envelopeSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+
+    closeBtn.addEventListener('click', closeInvitation);
+
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeInvitation();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('show')) {
+        closeInvitation();
+      }
+    });
+  </script>
+</body>
+</html>
