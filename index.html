@@ -1,60 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MY BRAND – Present</title>
-  <link rel="stylesheet" href="styles.css">
-  <script src="script.js" defer></script>
+    <meta charset="UTF-8">
+    <title>Birthday Letter Invitation</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            flex-direction: column;
+        }
+        #letter {
+            cursor: pointer;
+            padding: 20px 40px;
+            background: #fff;
+            border: 2px solid #333;
+            font-size: 1.2em;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+        }
+        #video {
+            display: none;
+            margin-top: 20px;
+        }
+        iframe {
+            width: 80%;
+            height: 400px;
+            border: none;
+        }
+    </style>
 </head>
 <body>
-
-  <!-- NAVBAR -->
-  <header class="navbar">
-    <div class="logo">MY BRAND</div>
-    <nav>
-      <a href="#">Shop</a>
-      <a href="#">About</a>
-      <a href="#">Contact</a>
-    </nav>
-  </header>
-
-  <!-- COLLECTION HEADER -->
-  <section class="collection-header">
-    <h1>PRESENT</h1>
-  </section>
-
-  <!-- PRODUCT GRID -->
-  <section class="products">
-    <div class="product-card">
-      <img src="https://images.unsplash.com/photo-1600180758895-d29dbd1cfef3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxMTc3M3wwfDF8c2VhcmNofDF8fHRlZXxlbnwwfHx8fDE2OTk5MjIzNTc&ixlib=rb-4.0.3&q=80&w=400" alt="Big Brother Tee">
-      <h3>Big Brother Tee</h3>
-      <p>$38.00</p>
+    <div id="letter">Click to open your special invitation!</div>
+    <div id="video">
+        <!-- Replace the link below with your video embed -->
+        <iframe id="videoFrame" src="" allowfullscreen></iframe>
     </div>
 
-    <div class="product-card sold-out">
-      <img src="https://images.unsplash.com/photo-1618354691998-f064f42ec23f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxMTc3M3wwfDF8c2VhcmNofDJ8fHRlZXxlbnwwfHx8fDE2OTk5MjI0MjY&ixlib=rb-4.0.3&q=80&w=400" alt="OG Bones Tee">
-      <span class="badge">SOLD OUT</span>
-      <h3>OG Bones Tee</h3>
-      <p>$38.00</p>
-    </div>
-
-    <div class="product-card">
-      <img src="https://images.unsplash.com/photo-1618354691996-7d024c27bb92?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxMTc3M3wwfDF8c2VhcmNofDN8fGhvb2RpZXxlbnwwfHx8fDE2OTk5MjI0NDE&ixlib=rb-4.0.3&q=80&w=400" alt="Phantom Hoodie">
-      <h3>Phantom Hoodie</h3>
-      <p>$68.00</p>
-    </div>
-
-    <div class="product-card">
-      <img src="https://images.unsplash.com/photo-1593032465172-404bcacda5e6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxMTc3M3wwfDF8c2VhcmNofDR8fGhvb2RpZXxlbnwwfHx8fDE2OTk5MjI0NTc&ixlib=rb-4.0.3&q=80&w=400" alt="Emperors Hoodie">
-      <h3>Emperors Hoodie</h3>
-      <p>$88.00</p>
-    </div>
-  </section>
-
-  <footer>
-    <p>© 2026 MY BRAND. All rights reserved.</p>
-  </footer>
-
+    <script>
+        document.getElementById('letter').addEventListener('click', function() {
+            const videoDiv = document.getElementById('video');
+            const iframe = document.getElementById('videoFrame');
+            iframe.src = 'YOUR_VIDEO_LINK_HERE'; // Insert your video link here
+            videoDiv.style.display = 'block';
+        });
+    </script>
 </body>
 </html>
