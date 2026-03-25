@@ -1,55 +1,105 @@
+import React, { useState, useRef, useEffect } from "react";
+
 export default function BirthdayInviteWebsite() {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    if (open && videoRef.current) {
+      videoRef.current.play().catch(() => {});
+    }
+  }, [open]);
 
   return (
-    <div className="min-h-screen bg-black text-white overflow-hidden relative flex items-center justify-center px-6">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(220,38,38,0.22),transparent_35%),radial-gradient(circle_at_bottom,rgba(127,29,29,0.28),transparent_40%)]" />
-      <div className="absolute inset-0 opacity-20 bg-[linear-gradient(rgba(255,0,0,0.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,0,0,0.08)_1px,transparent_1px)] bg-[size:36px_36px]" />
+    <div className="min-h-screen bg-black text-white relative overflow-hidden">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,0,0,0.18),transparent_30%),radial-gradient(circle_at_bottom,rgba(120,0,0,0.22),transparent_35%)]" />
+      <div className="absolute inset-0 opacity-30 bg-[linear-gradient(to_right,rgba(255,0,0,0.08)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,0,0,0.08)_1px,transparent_1px)] bg-[size:48px_48px]" />
+      <div className="absolute inset-0 bg-gradient-to-b from-black via-[#090000] to-black" />
 
-      <div className="relative z-10 flex flex-col items-center justify-center gap-10">
+      <div className="relative z-10 min-h-screen flex flex-col items-center justify-center px-6">
+        <div className="mb-10 text-center">
+          <div className="h-px w-32 mx-auto bg-gradient-to-r from-transparent via-red-600 to-transparent mb-6" />
+          <p className="text-red-400/90 uppercase tracking-[0.45em] text-xs sm:text-sm">
+            Open the invitation
+          </p>
+        </div>
+
         <button
           onClick={() => setOpen(true)}
           aria-label="Open invitation"
-          className="group relative transition duration-300 hover:scale-105 active:scale-95 focus:outline-none"
+          className="group relative focus:outline-none"
         >
-          <div className="absolute -inset-8 rounded-full bg-red-600/20 blur-3xl group-hover:bg-red-500/30 transition" />
+          <div className="absolute -inset-10 rounded-full bg-red-700/20 blur-3xl group-hover:bg-red-600/30 transition duration-500" />
 
-          <div className="relative w-[320px] h-[220px] sm:w-[420px] sm:h-[280px] drop-shadow-[0_0_35px_rgba(220,38,38,0.45)]">
-            <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-red-950 via-neutral-950 to-black border border-red-700/70 shadow-2xl overflow-hidden" />
+          <div className="relative w-[300px] sm:w-[420px] md:w-[500px] transition duration-500 group-hover:scale-105 group-active:scale-95 drop-shadow-[0_0_40px_rgba(255,0,0,0.35)]">
+            <svg
+              viewBox="0 0 500 360"
+              className="w-full h-auto"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <defs>
+                <linearGradient id="bodyGrad" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stopColor="#160000" />
+                  <stop offset="55%" stopColor="#2a0000" />
+                  <stop offset="100%" stopColor="#080808" />
+                </linearGradient>
+                <linearGradient id="flapGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#7f0000" />
+                  <stop offset="100%" stopColor="#330000" />
+                </linearGradient>
+                <linearGradient id="frontGrad" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stopColor="#220000" />
+                  <stop offset="100%" stopColor="#3a0000" />
+                </linearGradient>
+                <filter id="glow">
+                  <feGaussianBlur stdDeviation="8" result="blur" />
+                  <feMerge>
+                    <feMergeNode in="blur" />
+                    <feMergeNode in="SourceGraphic" />
+                  </feMerge>
+                </filter>
+              </defs>
 
-            <div className="absolute inset-x-0 bottom-0 h-[58%] rounded-b-2xl bg-gradient-to-b from-[#120202] to-[#3d0606] border-t border-red-900/70" />
-
-            <div className="absolute inset-x-0 top-0 mx-auto w-0 h-0 border-l-[160px] border-r-[160px] sm:border-l-[210px] sm:border-r-[210px] border-t-[110px] sm:border-t-[140px] border-l-transparent border-r-transparent border-t-red-800/90" />
-
-            <div className="absolute inset-x-0 bottom-0 mx-auto w-0 h-0 border-l-[160px] border-r-[160px] sm:border-l-[210px] sm:border-r-[210px] border-b-[120px] sm:border-b-[150px] border-l-transparent border-r-transparent border-b-red-950/90" />
-
-            <div className="absolute left-1/2 top-[44%] -translate-x-1/2 -translate-y-1/2 w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-black/85 border-2 border-red-600 shadow-[0_0_25px_rgba(220,38,38,0.55)] flex items-center justify-center">
-              <div className="w-6 h-6 sm:w-7 sm:h-7 rotate-45 border-r-2 border-b-2 border-red-500" />
-            </div>
-
-            <div className="absolute inset-0 rounded-2xl ring-1 ring-red-500/20 group-hover:ring-red-500/50 transition" />
+              <rect x="35" y="55" width="430" height="255" rx="24" fill="url(#bodyGrad)" stroke="#991b1b" strokeWidth="3" />
+              <path d="M35 95 L250 225 L465 95" fill="none" stroke="#dc2626" strokeOpacity="0.35" strokeWidth="3" />
+              <path d="M35 310 L180 185 L250 225 L320 185 L465 310" fill="url(#frontGrad)" stroke="#7f1d1d" strokeWidth="3" />
+              <path d="M35 56 L250 205 L465 56" fill="url(#flapGrad)" stroke="#991b1b" strokeWidth="3" />
+              <circle cx="250" cy="192" r="34" fill="#090909" stroke="#ef4444" strokeWidth="3" filter="url(#glow)" />
+              <path d="M235 192 L250 206 L265 192" fill="none" stroke="#ef4444" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+              <rect x="35" y="55" width="430" height="255" rx="24" fill="none" stroke="#ef4444" strokeOpacity="0.18" strokeWidth="8" />
+            </svg>
           </div>
         </button>
+
+        <p className="mt-8 text-red-300/75 text-sm tracking-[0.25em] uppercase">
+          Click the letter
+        </p>
       </div>
 
       {open && (
-        <div className="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center px-4 py-8">
+          <div className="absolute inset-0 bg-[radial-gradient(circle,rgba(255,0,0,0.12),transparent_45%)]" />
+
           <button
-            onClick={() => setOpen(false)}
-            className="absolute top-5 right-5 h-11 w-11 rounded-full border border-red-700 bg-black/80 text-red-400 text-xl hover:bg-red-950/60 hover:text-red-200 transition"
+            onClick={() => {
+              if (videoRef.current) {
+                videoRef.current.pause();
+              }
+              setOpen(false);
+            }}
+            className="absolute top-5 right-5 z-50 w-11 h-11 rounded-full border border-red-700 bg-black/80 text-red-400 text-2xl leading-none hover:bg-red-950 hover:text-white transition"
             aria-label="Close video"
           >
             ×
           </button>
 
-          <div className="w-full max-w-4xl rounded-3xl border border-red-800/70 bg-gradient-to-br from-neutral-950 to-black p-3 shadow-[0_0_60px_rgba(220,38,38,0.25)]">
-            <div className="aspect-video w-full overflow-hidden rounded-2xl bg-black border border-red-900/70">
+          <div className="relative z-10 w-full max-w-4xl rounded-[28px] border border-red-800/80 bg-gradient-to-br from-[#120000] via-black to-[#120000] p-3 shadow-[0_0_60px_rgba(255,0,0,0.25)]">
+            <div className="aspect-video overflow-hidden rounded-[22px] border border-red-900/80 bg-black">
               <video
+                ref={videoRef}
                 controls
-                autoPlay
                 playsInline
-                className="h-full w-full object-cover bg-black"
-                poster="https://images.unsplash.com/photo-1511988617509-a57c8a288659?auto=format&fit=crop&w=1400&q=80"
+                className="w-full h-full object-cover bg-black"
               >
                 <source src="/birthday-video.mp4" type="video/mp4" />
                 Your browser does not support the video tag.
